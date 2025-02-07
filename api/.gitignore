@@ -1,0 +1,27 @@
+# Basic .gitignore file for a Node.js project
+
+# node_modules directory (contains all dependencies)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment configuration files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Cache and log files
+logs/
+*.log
+*.log.*
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Git auto-generated files
+.git/
+
