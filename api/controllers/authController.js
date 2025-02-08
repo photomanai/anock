@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 
 module.exports.registerPost = async (req, res) => {
   try {
@@ -30,7 +31,7 @@ module.exports.registerPost = async (req, res) => {
 module.exports.loginPost = async (req, res) => {
   try {
     const { userName, password } = req.body;
-
+    console.log(process.env.ACCESS_TOKEN_SECRET);
     const user = await User.findOne({ userName });
     if (!user) {
       return res.status(400).json({ message: "Cannot find user" });
@@ -38,14 +39,14 @@ module.exports.loginPost = async (req, res) => {
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (isPasswordCorrect) {
-      //   const token = jwt.sign(
-      //     { userId: user._id, userName: user.userName },
-      //     process.env.JWT_SECRET, // .env dosyasındaki JWT_SECRET anahtarını kullan
-      //     { expiresIn: "1h" } // Token geçerlilik süresi (1 saat)
-      //   );
+      const token = jwt.sign(
+        { userId: user._id, userName: user.userName },
+        process.env.ACCESS_TOKEN_SECRET
+      );
 
       res.status(200).json({
         message: "Login successful",
+        accessToken: token,
       });
     } else {
       res.status(400).json({ message: "Invalid credentials" });
