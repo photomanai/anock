@@ -25,7 +25,7 @@ Merhaba eğlence sever! 🎉 Anock, insanların anonim olarak bazı soruları ce
 ### 🎨 Frontend
 1. Depoyu klonla:
    ```sh
-   git clone https://github.com/kullanici_adiniz/anock.git
+   git clone https://github.com/photomanai/anock
    ```
 2. Frontend dizinine gir:
    ```sh
