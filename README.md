@@ -1,75 +1,74 @@
-# 🎭 Anock - Şansına Güveniyor Musun? 🎲
+# 🎭 Anock - Do You Trust Your Luck? 🎲  
 
-Merhaba eğlence sever! 🎉 Anock, insanların anonim olarak bazı soruları cevaplayarak **şanslarını** hesapladıkları ve en **uygun eşleşmelerini** görebildikleri süper eğlenceli bir platformdur! 🚀✨
+Hello, fun lover! 🎉 Anock is a super fun platform where people answer some questions anonymously to calculate their **luck** and see their **best matches**! 🚀✨  
 
-## 🤔 Nasıl Çalışıyor?
-1. Anonim olarak belirlenen soruları cevapla 📝
-2. Sistem senin için en uygun eşleşmeyi hesaplasın! 💕
-3. Kiminle ne kadar uyumlusun gör ve eğlenceye katıl! 🔥
+## 🤔 How Does It Work?  
+1. Answer the given questions anonymously 📝  
+2. The system calculates your best match! 💕  
+3. See how compatible you are and join the fun! 🔥  
 
-## 💻 Kullanılan Teknolojiler
+## 💻 Technologies Used  
 
-### 🖥️ Frontend
-- ⚛️ **React** - Kullanıcı arayüzü için
-- 🎛️ **Redux Toolkit** - Durum yönetimi için
-- 🌎 **React Router DOM** - Sayfa yönlendirmeleri için
-- ✅ **Formik & Yup** - Form yönetimi ve doğrulama için
+### 🖥️ Frontend  
+- ⚛️ **React** - For the user interface  
+- 🎛️ **Redux Toolkit** - For state management  
+- 🌎 **React Router DOM** - For page navigation  
+- ✅ **Formik & Yup** - For form handling and validation  
 
-### 🔧 Backend
-- 🚀 **Node.js** - Sunucu tarafı için
-- ⚡ **Express.js** - API oluşturmak için
-- 🗄️ **MongoDB** - Veritabanı yönetimi için
+### 🔧 Backend  
+- 🚀 **Node.js** - For the server-side  
+- ⚡ **Express.js** - To create APIs  
+- 🗄️ **MongoDB** - For database management  
 
-## 🚀 Kurulum & Çalıştırma
+## 🚀 Installation & Running the Project  
 
-### 🎨 Frontend
-1. Depoyu klonla:
+### 🎨 Frontend  
+1. Clone the repository:  
    ```sh
    git clone https://github.com/photomanai/anock
-   ```
-2. Frontend dizinine gir:
+   ```  
+2. Navigate to the frontend directory:  
    ```sh
    cd anock/frontend
-   ```
-3. Bağımlılıkları yükle:
+   ```  
+3. Install dependencies:  
    ```sh
    npm install
-   ```
-4. Uygulamayı başlat:
+   ```  
+4. Start the application:  
    ```sh
    npm run dev
-   ```
+   ```  
 
-### ⚙️ Backend
-1. Backend dizinine gir:
+### ⚙️ Backend  
+1. Navigate to the backend directory:  
    ```sh
    cd ../backend
-   ```
-2. Bağımlılıkları yükle:
+   ```  
+2. Install dependencies:  
    ```sh
    npm install
-   ```
-3. Çevre değişkenlerini `.env` dosyasına ekle:
+   ```  
+3. Add environment variables to a `.env` file:  
    ```sh
-   MONGO_URI=veritabani_baglanti_adresi
+   MONGO_URI=your_database_connection
    PORT=5000
-   ```
-4. Sunucuyu başlat:
+   ```  
+4. Start the server:  
    ```sh
    npm start
-   ```
+   ```  
 
-## 🎉 Katkıda Bulunma
-Projeye katkıda bulunmak istersen:
-1. Depoyu çatalla (`Fork`) 🍴
-2. Yeni bir dal (branch) oluştur: `git checkout -b yeni-ozellik` 🌿
-3. Değişikliklerini yap ve kaydet: `git commit -m 'Yeni özellik eklendi'` 📝
-4. Değişiklikleri gönder: `git push origin yeni-ozellik` 🚀
-5. Bir `Pull Request` oluştur 🤝
+## 🎉 Contributing  
+If you want to contribute to the project:  
+1. Fork the repository 🍴  
+2. Create a new branch: `git checkout -b new-feature` 🌿  
+3. Make your changes and commit: `git commit -m 'Added a new feature'` 📝  
+4. Push your changes: `git push origin new-feature` 🚀  
+5. Open a **Pull Request** 🤝  
 
-## 📜 Lisans
-Bu proje **MIT Lisansı** ile lisanslanmıştır. 🔓
+## 📜 License  
+This project is licensed under the **MIT License**. 🔓  
 
----
-📩 Proje ile ilgili önerilerin mi var? Hadi konuşalım! 😎🎯
-
+---  
+📩 Have any suggestions for the project? Let's talk! 😎🎯  
