@@ -4,7 +4,6 @@ import RouterConfig from "./config/RouterConfig";
 function App() {
   return (
     <div>
-      hello
       <RouterConfig />
     </div>
   );
