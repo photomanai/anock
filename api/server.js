@@ -7,7 +7,8 @@ const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 8000;
+const ip = process.env.LOCAL_IP || "127.0.0.1";
 
 app.use(cors());
 app.use(express.json());
@@ -21,6 +22,6 @@ app.get("/", (req, res) => {
 //   console.log(`Server running at http://1192.168.1.14:${port}`);
 // });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(port, ip, () => {
+  console.log(`Server running at http://${ip}:${port}`);
 });

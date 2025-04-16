@@ -26,3 +26,5 @@ Thumbs.db
 .git/
 
 *.rest
+
+package-lock.json
