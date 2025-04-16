@@ -4,12 +4,13 @@ import React, { useEffect, useState, useRef } from "react";
 const MessageViewer = () => {
   const [messages, setMessages] = useState([]);
   const messageContainerRef = useRef(null);
+
+  const BASE_URL = import.meta.env.VITE_BASE_API_URL;
+
   const getMessage = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/chat/viewer"
-      );
-      console.log(response.data.Messages);
+      const response = await axios.post(`${BASE_URL}/chat/viewer`);
+      // console.log(response.data.Messages);
 
       const sortedMessages = response.data.Messages.sort(
         (a, b) => new Date(a.date) - new Date(b.date)

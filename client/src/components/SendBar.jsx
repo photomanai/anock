@@ -5,17 +5,16 @@ const SendBar = () => {
   const [userName, setUserName] = useState("User");
   const [message, setMessage] = useState("");
 
+  const BASE_URL = import.meta.env.VITE_BASE_API_URL;
+
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/chat/sender",
-        {
-          userName,
-          message,
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/chat/sender`, {
+        userName,
+        message,
+      });
       setMessage("");
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.error(error);
     }
