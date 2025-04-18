@@ -18,10 +18,6 @@ app.get("/", (req, res) => {
   res.end("hello node.js");
 });
 
-// app.listen(port, "192.168.1.14", () => {
-//   console.log(`Server running at http://1192.168.1.14:${port}`);
-// });
-
 app.listen(port, ip, () => {
   console.log(`Server running at http://${ip}:${port}`);
 });
