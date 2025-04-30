@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("./models/db");
 const routers = require("./routers/routerManager");
 const cors = require("cors");
+const io = require("socket.io");
 
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });

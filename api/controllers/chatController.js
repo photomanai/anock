@@ -1,5 +1,7 @@
 const Message = require("../models/message");
 
+//Socket io
+
 module.exports.senderPost = async (req, res) => {
   try {
     const { userName, message } = req.body;
