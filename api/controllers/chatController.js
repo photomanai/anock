@@ -26,6 +26,13 @@ module.exports.senderPost = async (req, res) => {
   }
 };
 
+module.exports.getMessageByRoom = async (req, res) => {
+  const { roomId } = req.query;
+  const message = await Message.find({ roomId }).sort({ date: 1 });
+  console.log(roomId);
+  res.status(201).json(message);
+};
+
 module.exports.viwerPost = async (req, res) => {
   try {
     const Messages = await Message.find();

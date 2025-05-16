@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 
@@ -9,11 +10,19 @@ const MessageViewer = () => {
   const roomId = "room123";
 
   useEffect(() => {
+    axios
+      .get(
+        `${import.meta.env.VITE_BASE_API_URL}/chat/messages?roomId=${roomId}`
+      )
+      .then((res) => {
+        setMessages(res.data);
+      })
+      .catch(console.error);
+
     socket.emit("joinRoom", roomId);
-    console.log("📡 Joined room:", roomId);
 
     const handleMessage = (msg) => {
-      console.log("💬 Yeni mesaj alındı:", msg);
+      console.log("New Message:", msg);
       setMessages((prev) => [...prev, msg]);
     };
 
@@ -25,7 +34,6 @@ const MessageViewer = () => {
   }, []);
 
   useEffect(() => {
-    // Scroll'u en alta indir
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollTop =
         messageContainerRef.current.scrollHeight;
