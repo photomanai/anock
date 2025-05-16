@@ -12,9 +12,9 @@ const SendBar = () => {
       const response = await axios.post(`${BASE_URL}/chat/sender`, {
         userName,
         message,
+        roomId: "room123",
       });
       setMessage("");
-      // console.log(response);
     } catch (error) {
       console.error(error);
     }

@@ -4,16 +4,21 @@ const Message = require("../models/message");
 
 module.exports.senderPost = async (req, res) => {
   try {
-    const { userName, message } = req.body;
-    console.log(req.body); // req.body'yi kontrol et
+    const { userName, message, roomId } = req.body;
+    console.log(req.body);
 
     const newMessage = new Message({
       userName,
       message,
-      date: new Date(), // Eğer date yoksa, şu anki tarihi kullan
+      roomId,
+      date: new Date(),
     });
 
     await newMessage.save();
+
+    const io = req.app.get("io");
+    io.to(roomId).emit("chat:message", newMessage);
+
     res.status(201).json({ newMessage, message: "Message Sent Successfully" });
   } catch (error) {
     console.error("Error during message sending: ", error);
