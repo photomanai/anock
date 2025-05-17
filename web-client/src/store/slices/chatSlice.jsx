@@ -4,9 +4,8 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_API_URL;
 
 const initialState = {
-  roomId: "room123",
+  roomId: null,
   messages: [],
-  userName: "Adil",
   loading: false,
 };
 
@@ -26,12 +25,11 @@ export const sendMessage = createAsyncThunk(
   "chat/sendMessage",
   async ({ userName, message, roomId }) => {
     try {
-      const res = await axios.post(`${BASE_URL}/chat/sender`, {
+      await axios.post(`${BASE_URL}/chat/sender`, {
         userName,
         message,
         roomId,
       });
-      // return res.data.newMessage;
     } catch (error) {
       console.error(error);
     }
@@ -45,17 +43,22 @@ const chatSlice = createSlice({
     addMessageRealTime: (state, action) => {
       state.messages.push(action.payload);
     },
+    clearMessages: (state) => {
+      state.messages = [];
+    },
+    setRoomId: (state, action) => {
+      state.roomId = action.payload;
+      // fetchMessages(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchMessages.fulfilled, (state, action) => {
       state.messages = action.payload;
     });
-    // .addCase(sendMessage.fulfilled, (state, action) => {
-    //   state.messages.push(action.payload);
-    // });
   },
 });
 
-export const { addMessageRealTime } = chatSlice.actions;
+export const { addMessageRealTime, clearMessages, setRoomId } =
+  chatSlice.actions;
 
 export default chatSlice.reducer;
