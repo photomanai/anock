@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const controller = require("../controllers/authController");
-const middleWare = require("../middleWare/authenticateMiddleWare");
+const { authenticateToken } = require("../middleWare/authenticateMiddleWare");
 
 router.post("/register", controller.registerPost);
 router.post("/login", controller.loginPost);
+router.post("/protected", authenticateToken, controller.protected);
 
 module.exports = router;

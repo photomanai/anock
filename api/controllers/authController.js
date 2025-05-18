@@ -5,6 +5,9 @@ const jwt = require("jsonwebtoken");
 module.exports.registerPost = async (req, res) => {
   try {
     const { userName, password } = req.body;
+    if (!userName.trim() || !password.trim()) {
+      return res.status(400).json({ message: "Missing credentials" });
+    }
 
     const existingUser = await User.findOne({ userName });
     if (existingUser) {
@@ -31,10 +34,13 @@ module.exports.registerPost = async (req, res) => {
 module.exports.loginPost = async (req, res) => {
   try {
     const { userName, password } = req.body;
-    console.log(process.env.ACCESS_TOKEN_SECRET);
+    if (!userName.trim() || !password.trim()) {
+      return res.status(400).json({ message: "Missing credentials" });
+    }
+
     const user = await User.findOne({ userName });
     if (!user) {
-      return res.status(400).json({ message: "Cannot find user" });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
@@ -47,6 +53,8 @@ module.exports.loginPost = async (req, res) => {
       res.status(200).json({
         message: "Login successful",
         accessToken: token,
+        userId: user._id,
+        userName: user.userName,
       });
     } else {
       res.status(400).json({ message: "Invalid credentials" });
@@ -55,4 +63,12 @@ module.exports.loginPost = async (req, res) => {
     console.error("Error during login: ", error);
     res.status(500).json({ message: "Server error" });
   }
+};
+
+module.exports.protected = (req, res) => {
+  console.log(req.user);
+  res.json({
+    message: "Protected data accessed successfully",
+    user: req.user,
+  });
 };
