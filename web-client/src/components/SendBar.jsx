@@ -4,12 +4,13 @@ import { sendMessage } from "../store/slices/chatSlice";
 
 const SendBar = () => {
   const dispatch = useDispatch();
-  const [userName, setUserName] = useState("User");
   const [message, setMessage] = useState("");
-  const roomId = useSelector((state) => state.chat.roomId);
+  const { roomId, error } = useSelector((state) => state.chat);
+  const { userName } = useSelector((state) => state.auth);
 
   const handleSubmit = () => {
-    if (!message.trim() || !userName.trim()) {
+    console.log(error);
+    if (!message.trim() || !userName) {
       alert("All fields are required.");
       return;
     }
@@ -25,19 +26,13 @@ const SendBar = () => {
     <div className="sender">
       <input
         type="text"
-        value={userName}
-        onChange={(e) => {
-          setUserName(e.target.value);
-        }}
-      />
-      <input
-        type="text"
         value={message}
         onChange={(e) => {
           setMessage(e.target.value);
         }}
       />
       <button onClick={handleSubmit}>Send</button>
+      {error && <p>{error}</p>}
     </div>
   );
 };

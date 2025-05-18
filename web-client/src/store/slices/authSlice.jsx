@@ -1,17 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const BASE_URL = import.meta.env.VITE_BASE_API_URL;
+import api from "../../config/axiosConfig";
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (credentials, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/auth/login`, {
+      const response = await api.post(`/auth/login`, {
         userName: credentials.userName,
         password: credentials.password,
       });
-
       const token = response.data.accessToken;
       localStorage.setItem("token", token);
 
@@ -31,9 +29,7 @@ export const protectedUser = createAsyncThunk(
     if (!token) return rejectWithValue("No token");
 
     try {
-      const res = await axios.get(`${BASE_URL}/auth/protected`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await api.get(`/auth/protected`);
 
       return { token, user: res.data.user };
     } catch (err) {
@@ -77,8 +73,8 @@ const authSlice = createSlice({
       })
       .addCase(protectedUser.fulfilled, (state, action) => {
         state.token = action.payload.token;
-        state.userId = action.payload.userId;
-        state.userName = action.payload.userName;
+        state.userId = action.payload.user.userId;
+        state.userName = action.payload.user.userName;
         state.error = null;
         state.loading = false;
         state.isAuthResolved = true;

@@ -2,23 +2,24 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import api from "../../config/axiosConfig";
 
-const BASE_URL = import.meta.env.VITE_BASE_API_URL;
-
 const initialState = {
   roomId: null,
   messages: [],
   loading: false,
+  error: null,
 };
 
 export const fetchMessages = createAsyncThunk(
   "chat/fetchMessages",
   async (roomId) => {
     try {
-      const res = await axios.get(`${BASE_URL}/chat/messages?roomId=${roomId}`);
-      // const res = api.get(`/chat/messages?roomId=${roomId}`);
+      const res = await api.get(`/chat/messages?roomId=${roomId}`);
       return res.data;
     } catch (error) {
-      console.error(error);
+      if (err.response?.status === 401) {
+        return rejectWithValue("UNAUTHORIZED");
+      }
+      return rejectWithValue(err.response?.data || "Unknown error");
     }
   }
 );
@@ -27,13 +28,13 @@ export const sendMessage = createAsyncThunk(
   "chat/sendMessage",
   async ({ userName, message, roomId }) => {
     try {
-      await axios.post(`${BASE_URL}/chat/sender`, {
+      await api.post(`/chat/sender`, {
         userName,
         message,
         roomId,
       });
     } catch (error) {
-      console.error(error);
+      return rejectWithValue(err.response?.data || "Unknown error");
     }
   }
 );
@@ -50,13 +51,29 @@ const chatSlice = createSlice({
     },
     setRoomId: (state, action) => {
       state.roomId = action.payload;
-      // fetchMessages(action.payload);
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchMessages.fulfilled, (state, action) => {
-      state.messages = action.payload;
-    });
+    builder
+      .addCase(sendMessage.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(sendMessage.fulfilled, (state) => {
+        state.error = null;
+      })
+      .addCase(fetchMessages.fulfilled, (state, action) => {
+        state.messages = action.payload;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(fetchMessages.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchMessages.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      });
   },
 });
 

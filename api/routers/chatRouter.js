@@ -4,7 +4,7 @@ const router = express.Router();
 const controller = require("../controllers/chatController");
 const { authenticateToken } = require("../middleWare/authenticateMiddleWare");
 
-router.post("/sender", controller.senderPost);
-router.get("/messages", controller.getMessageByRoom);
+router.post("/sender", authenticateToken, controller.senderPost);
+router.get("/messages", authenticateToken, controller.getMessageByRoom);
 
 module.exports = router;
