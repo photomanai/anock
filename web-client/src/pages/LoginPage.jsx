@@ -20,7 +20,6 @@ const LoginPage = () => {
       return;
     }
     dispatch(loginUser(credential));
-    navigate(nav);
   };
 
   const handleChange = (e) => {

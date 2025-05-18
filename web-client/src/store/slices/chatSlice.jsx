@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "../../config/axiosConfig";
 
 const BASE_URL = import.meta.env.VITE_BASE_API_URL;
 
@@ -14,6 +15,7 @@ export const fetchMessages = createAsyncThunk(
   async (roomId) => {
     try {
       const res = await axios.get(`${BASE_URL}/chat/messages?roomId=${roomId}`);
+      // const res = api.get(`/chat/messages?roomId=${roomId}`);
       return res.data;
     } catch (error) {
       console.error(error);

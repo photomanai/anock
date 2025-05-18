@@ -31,7 +31,7 @@ export const protectedUser = createAsyncThunk(
     if (!token) return rejectWithValue("No token");
 
     try {
-      const res = await axios.get(`${BASE_URL}/auth/me`, {
+      const res = await axios.get(`${BASE_URL}/auth/protected`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -48,6 +48,7 @@ const initialState = {
   token: localStorage.getItem("token") || null,
   error: null,
   loading: false,
+  isAuthResolved: true,
 };
 
 const authSlice = createSlice({
@@ -70,14 +71,22 @@ const authSlice = createSlice({
         state.error = action.payload;
         state.loading = false;
       })
+      .addCase(protectedUser.pending, (state) => {
+        state.loading = true;
+        state.isAuthResolved = false;
+      })
       .addCase(protectedUser.fulfilled, (state, action) => {
         state.token = action.payload.token;
         state.userId = action.payload.userId;
         state.userName = action.payload.userName;
         state.error = null;
+        state.loading = false;
+        state.isAuthResolved = true;
       })
       .addCase(protectedUser.rejected, (state, action) => {
         state.error = action.payload;
+        state.loading = false;
+        state.isAuthResolved = true;
       });
   },
 });

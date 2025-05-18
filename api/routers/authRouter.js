@@ -6,6 +6,6 @@ const { authenticateToken } = require("../middleWare/authenticateMiddleWare");
 
 router.post("/register", controller.registerPost);
 router.post("/login", controller.loginPost);
-router.post("/protected", authenticateToken, controller.protected);
+router.get("/protected", authenticateToken, controller.protected);
 
 module.exports = router;

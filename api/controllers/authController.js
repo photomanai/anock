@@ -66,7 +66,6 @@ module.exports.loginPost = async (req, res) => {
 };
 
 module.exports.protected = (req, res) => {
-  console.log(req.user);
   res.json({
     message: "Protected data accessed successfully",
     user: req.user,
