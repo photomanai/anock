@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
+// TODO: REFRESH Token
+
 module.exports.registerPost = async (req, res) => {
   try {
     const { userName, password } = req.body;
