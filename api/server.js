@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("./models/db");
 const routers = require("./routers/routerManager");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -15,8 +16,9 @@ require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 const app = express();
 
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: "http://192.168.1.34:4000", credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 const server = http.createServer(app);
 const io = new Server(server, {
