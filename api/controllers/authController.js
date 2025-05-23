@@ -92,7 +92,7 @@ module.exports.protected = (req, res) => {
 };
 
 module.exports.refreshToken = async (req, res) => {
-  const token = req.cookie.refreshToken;
+  const token = req.cookies.refreshToken;
 
   if (!token) return res.status(401).json({ message: "No refresh token" });
 
