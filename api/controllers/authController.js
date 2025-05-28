@@ -94,21 +94,41 @@ module.exports.protected = (req, res) => {
 module.exports.refreshToken = async (req, res) => {
   const token = req.cookies.refreshToken;
 
-  if (!token) return res.status(401).json({ message: "No refresh token" });
+  if (!token) {
+    return res.status(401).json({ message: "No refresh token" });
+  }
 
   try {
     const payload = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
 
-    const user = await User.findById(payload.userId);
-    if (!user) return res.status(401).json({ message: "User not found" });
+    // Kullanıcıyı veritabanından bul + ek kontroller
+    const user = await RefreshToken.findOne({ userId: payload.userId });
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
 
-    const newAccessToken = (generateAccessToken = generateAccessToken(user));
+    // Refresh token'ın veritabanında aktif olduğunu kontrol et
+    if (user.token !== token) {
+      return res.status(403).json({ message: "Invalid refresh token" });
+    }
 
-    res.status(201).json({ accessToken: newAccessToken });
+    // Hesap durum kontrolü (örneğin ban durumu)
+    // if (!user.isActive) {
+    //   return res.status(403).json({ message: "Account deactivated" });
+    // }
+
+    // Yeni access token oluştur (DÜZELTME BURADA)
+    const newAccessToken = generateAccessToken(user); // Fonksiyon doğru çağrıldı
+
+    res.status(200).json({ accessToken: newAccessToken }); // 201 -> 200
   } catch (err) {
-    return res
-      .status(403)
-      .json({ message: "Invalid or expired refresh token" });
+    // JWT hataları için özel mesaj
+    const message =
+      err.name === "TokenExpiredError"
+        ? "Refresh token expired"
+        : "Invalid refresh token";
+
+    res.status(403).json({ message });
   }
 };
 

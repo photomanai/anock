@@ -29,6 +29,7 @@ export const protectedUser = createAsyncThunk(
     const token = localStorage.getItem("token");
     if (!token) return rejectWithValue("No token");
 
+    console.log(token);
     try {
       const res = await api.get(`/auth/protected`);
 
